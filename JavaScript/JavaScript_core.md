@@ -55,3 +55,19 @@ case2 event listeners : add event listeners and never remove them when we don't 
 case3 setInterval 
 
 global execution context
+
+### Single Threaded
+Single Threaded means only one set of instructions is executed at a time.
+one call stack 
+
+What problems do you see with sychronous code?
+such as alert function, user cannot do anything until the function is completely executed.
+
+JavaScript runtime
+Web browswer is working in the background while the sychronous JavaScript code is running and it's using something called the Web API or the Web browser API to communicate and let the JS engine know.
+
+Web API comes with the browser Chrom, Edge, and Safari. All of them have their JavaScript engine implementation and All of them have a JavaScript runtime that provide a Web API.
+These Web APIs, our applications which can do a variety of things like send HTTP requests, listen to DOM events, delay execution using something like set timeout.
+
+### Node.js 
+Node is javascript run time
