@@ -42,7 +42,7 @@ function add(){
 
 With global execution context, we have the global object, this object during the creation phase that get assigned. During the execution phase, we run our code, During the creation phase, we also have hoisting. Anytime we see the function or var keywords as the first items on the line, we allocate the space for them in heap memory to make sure that the JavaScript engine is ready for the execution.
 
-Hoissting happens on every execution context. Any time run function, a new execution context gets created and we have to go throught the creation phase and execution phase again. It makes unpredictable code so try to avoid hositing. 
+Hoisting happens on every execution context. Any time run function, a new execution context gets created and we have to go throught the creation phase and execution phase again. It makes unpredictable code so try to avoid hositing. 
 ```
 var food = 'grapes';
 var foodThoughts = function (){
@@ -52,3 +52,75 @@ var foodThoughts = function (){
 }
 foodThought();
 ```
+Function Expression
+```
+var canada = () =>{
+    console.log('cold');
+}
+```
+Function Declaration
+```
+function korea(){
+    console.log('warm');
+}
+```
+Function Invocation/Call/Execution
+canada function is defined at runtime when we actually run the function or called the function
+korea function is defined when the compiler initally looks at the code and starts hositing and allocating memory.
+```
+canada()
+india()
+```
+
+When a function is invoked, create a new execution context on top of global execution context and then we get this keyword.
+In function invocation, we get arguments keyword and arguments is only available to us when we create a new execution context with a function. 
+arguments keyword gives an object
+* arguments looks like an array but it's not really an array.  The arguments keyword might make compiler or javascript engine less able to optimize code, because we cannot really use array methods on this.
+* Each execution context we create a new arguments objects
+```
+function marry(person1,person2){
+    console.log('arguments',arguments);
+    console.log(Array.from(arguments)); // convert it into an array
+    return `${person1} is now married to ${person2}`;
+}
+```
+* Modern JavaScript avoid arguments
+```
+// Rest Parameters
+function marry2(...args){
+    console.log('arguments',args);
+    console.log(Array.from(arguments)); // create an array
+    return `${args[0]} is now married to ${args[1]}`;
+}
+```
+
+Variable enviroment is a place that variables can live in individual execution contexts(variables inside function). 
+They all technically live in JavaScript engine memory. Some function have access to their certain variables and some don't
+
+```
+// 1. function declarations, so these functions get hoisted and put at the top allocating memory space for them.
+// 2. isValid is a global variable is assigned an undefined when it gets hoisted.
+// 3. Then we start running or executing our code during the execution phase.
+// 4. The first step is 'var isValid = false;', in the memory space we change undefined to now false.
+// 5. The second step is 'one();', we invoke the function and a new execution context is created on top of the stack.
+// 6. some of the information can be on the actual call stack or the execution context.
+// Each execution context has its own variable environment
+function two(){
+    var isValid; // undefined
+}
+
+function one(){
+    var isValid = true; // local env (variable env) 
+    two(); // new exectuion context is created
+}
+
+var isValid = false;
+one();
+
+// two() -- undefined 
+// one() -- true
+// global execution context () -- false, 'one' and 'two' functions in the global variable environment.
+```
+ 
+
+
