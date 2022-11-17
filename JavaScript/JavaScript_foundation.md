@@ -122,5 +122,56 @@ one();
 // global execution context () -- false, 'one' and 'two' functions in the global variable environment.
 ```
  
+All of these functions have a global lexical environment that is they are written in the global space. 
+(not inside of another function, just on the main page. They get attached to the window object or the global object.)
+All these functions have their own variable environment and they have access to each their own variables, but they also have little link
+What we call is 'scope chain'. Links give us access to variables that are in our parent environment(global environment)
 
+In JavaScript our lexical scope(available data + variables where the function was defined) determines our avaiable variables.(variables in our local environment or variable environment) Not where the function is called (dynamic scope)
 
+It does not matter where the function is called, no matter where the function is on the execution stack.
+What matters is where the function is written.
+
+Lexical scope (static scope by JS language) only by looking at the source code, we can determine which environment the variables and data are available in, that is what the compiler does.
+
+The JavaScript compiler looks at the code and attaches all these scope chains before it even runs the code.
+The scope chain starts where the variable is defined and goes all the way down to the global context to see if the variable exists.
+
+```
+// static scope
+var x = 'x';
+function findName(){
+    console.log(x);
+    var b = 'b';
+    return printName();
+}
+
+function printName(){
+    var c = 'c';
+    return 'Andrei Neagoie';
+}
+
+function sayMyName(){
+    var a = 'a';
+    return findName();
+}
+```
+Function lexical environment that is findName is written insdie of sayMyName function
+Global scope is the outermost scope. Variables declared outside a function are in global scope.
+They can be accessed in any other scope that is inside of the functions.
+```
+function sayMyName(){
+    var a = 'a';
+    return function findName(){
+        var b = 'b';
+        console.log(c); // cannot access - undefined (Have this variable but it's not assigned anything right now)
+        return function printName(){
+            var c = 'c';
+            console.log(b); // can  access parent environment
+            return 'Jeongmi'
+        }
+    }
+}
+
+sayMyName()()()
+```
