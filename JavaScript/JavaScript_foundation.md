@@ -175,3 +175,64 @@ function sayMyName(){
 
 sayMyName()()()
 ```
+
+It is going to go up the scope chain to the global environment.
+Global environment sees that this doesn't exist and will creat it for us. Just as it's looking up the scope chain.
+
+'use strict' keyword prevents JavaScript doing unexpected pitfalls
+```
+'use strict'
+function weird(){
+ height = 50; // leakage of global variables. 
+ return height;
+}
+
+weird();
+var heyhey = function doodle(){
+    // do something
+    return 'heyhey'
+}
+heyhey();
+
+doodle(); // Get reference error, this is because the doodle function is actually enclosed in its own scope.
+// doodle is added to its own execution contexts variable environment
+```
+
+Function scope vs Block scope
+scope means what variables we have access to
+
+most other programming languages has block scope
+JavaScript is functionally scoped, only create a new scope, a new environment when there is a function.
+ES6 introduced the 'let' and 'const' keyword allow us to use block scope 
+```
+if (5>4){
+    var secret = '12345'
+    let something ='test' // only access it inside the block scope
+}
+
+secret;
+```
+Block scoping means declaring a variable not just inside a function, but around any curly brackets
+like if statements or loops. 
+The variable itself let i is still in memory, but the engine just won't allow us to access it before like it was when we used var
+This way we get to keep our mental framework of execution context and variable environment, 
+but also let and const keyword that give us some of the powers of block scoping.
+```
+function loop(){
+    for(var i = 0; i < 5; i++){
+        console.log(i);
+    }
+    console.log('final',i); // print i number
+
+    // block scope
+    for(let j = 0; j < 5; j++){
+        console.log(j);
+    }
+    console.log('final',j); // print reference error
+}
+
+loop();
+```
+
+
+
