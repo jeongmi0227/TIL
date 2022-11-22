@@ -233,6 +233,34 @@ function loop(){
 
 loop();
 ```
+If we declare everything as global variable then it will cause polluting the global namespace 
+that having too much data on our global execution environment.
+global variable can have variable collisions.
+All the script tags get combined into one execution context.
+Everything is on the global execution context and they overwrite each other if there's any duplicates.
+
+IIFE (Immediately invoked function expression)
+
+```
+// IIFE
+// We can place all library code inside of local scope to avoid any namespace collisions.
+
+// function expression
+// It will not be in global variable and 
+// all of the properties created inside over this function are going to be scoped inside IIFE not outside.
+// IIFE allows us to call immediately as JavaScript is executing. It's going to define what it is and right afterwards, 
+// with the brackets, it's going to call it. It's going to create new variable environment, a new execution context
+// This allows to us to attach private data in a new execution context that can be accessed by the global execution context(the chain runs downward)
+ 
+(function(){
+     var a = 1;
+})();
+
+// function(){}();  syntax error
+```
+
+'this' is the object that the function is a property of
+
 
 
 
