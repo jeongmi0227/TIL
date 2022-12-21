@@ -259,8 +259,131 @@ IIFE (Immediately invoked function expression)
 // function(){}();  syntax error
 ```
 
-'this' is the object that the function is a property of
+'this' is the object that the function is a property of.(who called me, this keyword acts as a placeholder and we'll refer to whichever object called that method.)
+When the global execution context starts during the creation phase, we create the global object and 'this'.
+Global  object and 'this', they are equal each other
 
+```
+// 1. Gives methods access to their object
 
+const obj = {
+    name : 'billy',
+    sing(){
+        return 'lalala '+this.name
+    },
+    singAgain(){
+        return this.sing()+'!'
+    }
+}
+obj.singAgain()
+
+// 2. Execute same code for multiple objects
+function importantPerson(){
+    console.log(this.name+'!');
+}
+
+const name = 'Sunny';
+const obj1 = {
+    name: 'Cassy',
+    importantPerson: importantPerson
+}
+
+const obj2 = {
+    name: 'Jacob',
+    importantPerson: importantPerson
+}
+
+importantPerson() // Sunny
+obj1.importantPerson() // Cassy
+obj2.importantPerson() // Jacob
+```
+
+manipulate this keyword
+call(), apply(), bind() 
+all the functions use call when invoking a function. 
+```
+function a(){
+    console.log('hi');
+}
+
+a.call() // underneath the hood in JS when we do a() invoke the function
+// All functions when created, have this porperty called 'call' that allows us to call the function.
+
+a.apply() // call and apply do the same thing.
+```
+call() and apply() are useful for borrowing methods from an object.
+ 'this' can be dynamic.
+bind() returns a new function with a certain context and parameters.
+It is usually used when we want a function to be called later on with a certain type of context or a certain type of this keyword.
+bind() allows us to store the this keyword or this function borrowing for later use.
+```
+const wizard = {
+    name: 'Merlin',
+    health: 100,
+    heal(num1, num2){
+        return this.health += num1 + num2;
+    }
+}
+
+const archer = {
+    name: 'Robin Hood',
+    health: 30
+}
+
+console.log('1', archer);
+// wizard.heal.call(archer,50, 30);
+wizard.heal.apply(archer, [50, 30]); // take a array as parameters
+const healArcher = wizard.heal.bind(archer,100, 30);
+healArcher(); 
+console.log('2', archer);
+
+```
+Exercise: call(), apply()
+```
+const array = [1,2,3];
+
+// in this case, the 'this' keyword doesn't matter!
+function getMaxNumber(arr){
+  return Math.max.apply(null, arr);  
+}
+
+getMaxNumber(array)
+```
+
+function currying
+Currying means give partial parameter
+it allows us to reuse a piece of code, give it a partial parameter, and create these functions are extensible.
+```
+function multiply(a,b){
+    return a*b
+}
+
+let multiplyByTwo =  multiply.bind(this,2);
+console.log(multiplyByTwo(4)) // 8
+
+let multiplyByTen =  multiply.bind(this,10);
+console.log(multiplyByTwo(4)) // 40
+```
+
+Exercise this keyword
+```
+var b = {
+    name: 'jay',
+    say(){ console.log(this)}
+}
+
+var c = {
+    name: 'jay',
+    say(){return function (){console.log(this)}}
+}
+
+var d = {
+    name: 'jay',
+    say() {return () => console.log(this)}
+}
+b.say()   // b object
+c.say()() // window object
+d.say()() // It fixed problem the this keyword was lexical scoped inside of the arrow function. It does not care about where it was called.
+```
 
 
