@@ -385,5 +385,7 @@ b.say()   // b object
 c.say()() // window object
 d.say()() // It fixed problem the this keyword was lexical scoped inside of the arrow function. It does not care about where it was called.
 ```
-
+#### Context vs Scope
+Context is most ofthen determined by how a function is invoked with the value of this keyword
+Scope refers to the visibility of variables
 
