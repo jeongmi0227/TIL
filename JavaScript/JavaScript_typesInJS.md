@@ -92,10 +92,33 @@ console.log(superClone); // no changes in this  clone object
 ```
 
 #### Exercise: Compare Objects
-
+How would you compare two objects if they are pointing to a different location in memory but still have the same properties?
 ```
 var user1 = {name : "nerd", org: "dev"};
 var user2 = {name : "nerd", org: "dev"};
 var eq = user1 == user2;
 alert(eq); // gives false
+```
+
+#### Type coericion
+Type coericion means when the appearance that is the things to the left and to the right of the operator are different types.
+One of them will be converted into an equivalent value by the JavaScript engine.
+
+type coericion means the language  converting a certain type to another type.
+```
+1 == '1' // JS engine will convert this to 1 == 1
+```
+
+#### Do all languages have type coericion?
+=> Yes they do, we always need to convert types between programs to do things.
+
+Object.is()
+```
+-0 == +0 // true
+
+// How can we compare those value correctly?
+// Object.is() is pretty much same as '===' except for a few cases.
+Object.is(-0,+0); // false
+
+NaN === NaN // false but we can use Object.is it will return true
 ```
